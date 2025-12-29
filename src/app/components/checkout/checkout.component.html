@@ -17,6 +17,18 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="firstName" type="text">
+                                <!-- dirty- user change field , touched: field lose focus -->
+                                @if(firstName?.invalid && (firstName?.dirty || firstName?.touched)){
+                                    <div class="alert alert-danger">
+                                        
+                                        @if(firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhiteSpace']){
+                                            <div>First Name is required</div>
+                                        }
+                                        @else if(firstName?.errors?.['minlength']){
+                                            <div>First Name must be atleast 2 characters</div>
+                                        }
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -29,6 +41,17 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="lastName" type="text">
+                                <!-- dirty- user change field , touched: field lose focus -->
+                                @if(lastName?.invalid && (lastName?.dirty || lastName?.touched)){
+                                    <div class="alert alert-danger">
+                                        @if(lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhiteSpace']){
+                                            <div>Last Name is required</div>
+                                        }
+                                        @else if(lastName?.errors?.['minlength']){
+                                            <div>Last Name Name must be atleast 2 characters</div>
+                                        }
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -41,6 +64,18 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="email" type="text">
+                                @if(email?.invalid && (email?.dirty || email?.touched)){
+                                    <div class="alert alert-danger">
+                                        @if(email?.errors?.['required']){
+                                            <div>E Mail is required</div>
+                                        }
+
+                                        @if(email?.errors?.['pattern']){
+                                            <div>E Mail must be in proper pattern</div>
+                                        }
+                                    </div>
+                                }
+                                
                             </div>
                         </div>
                     </div>

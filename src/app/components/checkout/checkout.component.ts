@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartServiceService } from '../../services/cart-service.service';
 import { FormService } from '../../services/form.service';
 import { Country } from '../../../common/country';
 import { State } from '../../../common/state';
+import { CustomValidators } from '../../validators/customValidators';
 
 @Component({
   selector: 'app-checkout',
@@ -31,10 +32,12 @@ export class CheckoutComponent implements OnInit{
       // we need mutliple forms and single submit button. So, grouping all those forms in one group and (ngSubmit) on that form 
       this.checkoutFormGroup = this.formBuilder.group({
         customer: this.formBuilder.group({
-          // Initializing with empty strings
-          firstName: [''],
-          lastName: [''],
-          email: [''],
+          // Initializing with empty strings and validations
+          firstName: new FormControl('',[Validators.required, Validators.minLength(2),CustomValidators.notOnlyWhiteSpace]),
+          lastName: new FormControl('',[Validators.required, Validators.minLength(2),CustomValidators.notOnlyWhiteSpace]),
+          email: new FormControl('',
+            [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]
+          ),
         }),
         shippingAddress: this.formBuilder.group({
           street: [''],
@@ -81,6 +84,25 @@ export class CheckoutComponent implements OnInit{
         
         //console.log(this.checkoutFormGroup.get('customer')!.value);
         console.log(this.checkoutFormGroup.controls['customer'].value);
+        
+        if(this.checkoutFormGroup.invalid){
+          // so it displays all error messages at once.
+          this.checkoutFormGroup.markAllAsTouched();
+        }
+      }
+
+
+      // to use in html: just write firstName with no paranthesis (as it is getter method)
+      get firstName(){
+        return this.checkoutFormGroup.get('customer.firstName');
+      }
+
+      get lastName(){
+        return this.checkoutFormGroup.get('customer.lastName');
+      }
+
+      get email(){
+        return this.checkoutFormGroup.get('customer.email');
       }
 
       copyShippingAddressToBillingAddress(event:any){
