@@ -1,0 +1,333 @@
+<div class="main-content page-m">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+                <!-- Customer form group -->
+
+                <div formGroupName="customer" class="form-area" >
+                    <!-- heading of form -->
+                    <h3>Customer</h3>
+                    <!-- fields -->
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >First Name</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="firstName" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Last Name</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="lastName" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >E-Mail</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="email" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- shipping address -->
+                <div formGroupName="shippingAddress" class="form-area" >
+                    <!-- heading of form -->
+                    <h3>Shipping Address</h3>
+                    <!-- fields -->
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Country</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="country" (change)="getStates('shippingAddress')">
+                                    @for(country of countries; track $index){
+                                        <option [ngValue]="country">{{country.name}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Street</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="street" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >City</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="city" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >State</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="state" (change)="getStates('shippingAddress')">
+                                    @for(state of shippingAddressStates; track $index){
+                                        <option [ngValue]="state">{{state.name}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Zip Code</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="zipCode" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add check box to copy shipping address to billing -->
+
+                <div class="input-space">
+                    <label  class="au-checkbox">
+                        <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
+                        <span class="au-checkmark">Billing Address same as shipping address</span>
+                    </label>
+                </div>
+                <hr>
+
+                
+                <!-- Billing Address -->
+                <div formGroupName="billingAddress" class="form-area" >
+                    <!-- heading of form -->
+                    <h3>Billing Address</h3>
+                    <!-- fields -->
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Country</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="country" (change)="getStates('billingAddress')">
+                                    @for(country of countries; track $index){
+                                        <option [ngValue]="country">{{country.name}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Street</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="street" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >City</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="city" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >State</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="state" >
+                                    @for(state of billingAddressStates; track $index){
+                                        <option [ngValue]="state">{{state.name}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Zip Code</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="zipCode" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credit Card Information -->
+
+                <div formGroupName="creditCard" class="form-area" >
+                    <!-- heading of form -->
+                    <h3>Credit Card Details</h3>
+                    <!-- fields -->
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Card Type</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="cardType">
+                                    <option ></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Name On Card</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="nameOnCard" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Card Number</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="cardNumber" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Card Number</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="cardNumber" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Security Code</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="securityCode" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Expiration Month</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="expirationMonth">
+                                    @for(month of creditCardMonths;track $index){
+                                        <!-- work -->
+                                        @if($index==0){<option selected="true">{{month}}</option>}
+                                        @else{
+                                            <option>{{month}}</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- md-2: medium screens -> take 2 coloumns out of 12 -->
+                        <div class="col-md-2">
+                            <label >Expiration Year</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
+                                    @for(year of creditCardYears;track $index){
+                                        <option [ngValue]="year">{{year}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Order details -->
+
+                <div class="form-area">
+                    <h3>Review Your Order</h3>
+
+                    <p>Total Quantity: {{totalQuantity}}</p>
+
+                    <p>Total Price: {{totalPrice}}</p>
+                </div>
+
+
+                <!-- submit button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-info">Purchase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
